@@ -1,27 +1,3 @@
-/**
- * Created by Seoyeong yun on 2017-11-01.
- */
-// divWrapperClass, selectInputName  <= Required
-// 프로미스에서 resolve된 리턴값 response를 이용해 이벤트추가 및 동적 select box 생성하면 됩니다
-//
-//$(function () {
-//    var sUrl = '/makgoli/list';
-//    var oOption = {
-//        'divWrapperClass': '',
-//        'selectInputName': '',
-//        'placeholder': '선택해주세요',
-//        'checkAllClass': false, 전체옵션 추가하고 싶을때
-//        'iCheckedLimit': 5 , 체크하는 li의 수를 제한하고 싶을때
-//        'inputWith': '150px',
-//        'noSearchArea' : '<li>아무것도 없음..</li>'
-//    };
-//    var oData = new optionTagListData(sUrl);
-//    var oPromise = oData.load().then(function (response) {
-//        var sHtml = makeSelectBoxHtml(oOption, response['aOptionTagList'], response['aParams']);
-//        var oSelectBox = new searchSelect(sHtml);
-//    });
-//    //oSelectBox.setEvent();
-//});
 
 //to load data
 var optionTagListData = function (sUrl) {
@@ -68,7 +44,7 @@ searchSelect.prototype.setEvent = function () {
         }
     });
 
-    //체크박스 이벤트처리
+    //even handle for checkbox
     $('body').delegate(sWrapperClassSelector + ' .fChk', 'click', function (e) {
         self.handleCheckBox(sWrapperClassSelector, e);
     });
@@ -110,12 +86,12 @@ searchSelect.prototype.moveHighlight = function (iDirection, e) {
     var oTargetLi = oWrapperClass.find('li');
     var iFocusedIndex = oWrapperClass.find('li.focus').index();
     var iNextIndex = iFocusedIndex + iDirection;
-    //포커스 최상단에 있는데 up키 누르면
+    //when you key up with focuse on top list
     if (iDirection == -1 && iFocusedIndex == 0) {
         return false;
     }
 
-    //포커스된 리스트가 없는데 up키를 눌렀을경우 첫번째 li에 포커스
+    //when there is no focused list 
     if (iDirection == -1 && iFocusedIndex == -1) {
         oWrapperClass.find('li:eq(0)').addClass('focus');
         return false;
@@ -185,7 +161,7 @@ searchSelect.prototype.setCheckedValue = function (sWrapperClassSelector) {
         oSelectNameInput.val(sValue);
 
         if(sVal == 'all'){
-            sValue = '전체';
+            sValue = 'all';
         }
         oInput.attr('placeholder', sValue);
     });
@@ -195,7 +171,7 @@ searchSelect.prototype.limitCheckedNo = function (sWrapperClassSelector) {
     var oChecked = $(sWrapperClassSelector + ' .fChk:checked');
     var iCheckedLimit = this.oOption.iCheckedLimit || null;
     if (iCheckedLimit !== null && oChecked.length > iCheckedLimit) {
-        var sAlertMessage = '옵션태그는' + oChecked.length + '개 까지만 선택 가능합니다';
+        var sAlertMessage = 'less than' oChecked.length + 'can be selected';
         alert(__(sAlertMessage));
         return false;
     }
@@ -246,7 +222,7 @@ searchSelect.prototype.makeSelectBoxHtml = function () {
     sHtml += '<ul class="' + (this.oOption.ulClass || 'result') + '">';
 //    sHtml += '<ul class="result"/>';
     if (!!this.oOption.checkAllClass == true) {
-        sHtml += '<li><label><input type="checkbox" class="fChk ' + this.oOption.checkAllClass + '"> 전체 </label></li>';
+        sHtml += '<li><label><input type="checkbox" class="fChk ' + this.oOption.checkAllClass + '"> all </label></li>';
     }
     this.aData.forEach(function (sOptionTag, iIndex) {
         sHtml += '<li><label><input type="checkbox" class="fChk" value ="' + sOptionTag + '"/>' + sOptionTag + '</label></li>';
