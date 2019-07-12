@@ -61,7 +61,7 @@ searchSelect.prototype.setEvent = function () {
     }
 };
 
-//keydown 이벤트 분기
+//key event
 searchSelect.prototype.bindKeyDownEvent = function (e) {
     var oKeyboardInput = {38: 'up', 40: 'down', 13: 'enter'};
     var iUp = (-1);
@@ -220,7 +220,6 @@ searchSelect.prototype.makeSelectBoxHtml = function () {
     sHtml += '<input type="text" class="fText ' + this.oOption.inputBoxClass + '" autocomplete="off" style="width:' + (this.oOption.width || '200px') + ';" placeholder="' + (this.oOption.placeholder || '선택해주세요') + '"/>';
 
     sHtml += '<ul class="' + (this.oOption.ulClass || 'result') + '">';
-//    sHtml += '<ul class="result"/>';
     if (!!this.oOption.checkAllClass == true) {
         sHtml += '<li><label><input type="checkbox" class="fChk ' + this.oOption.checkAllClass + '"> all </label></li>';
     }
